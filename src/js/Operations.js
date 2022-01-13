@@ -16,6 +16,7 @@ function Operations() {
     const [newPrice, setNewPrice] = useState(0.0);
 
 
+
     //read data
     const fetchData = () => {
         Axios.get("http://localhost:3001/read").then((response) => {
@@ -25,6 +26,25 @@ function Operations() {
 
     //insert data
     const addToList = () => {
+        var errorMessage = "";
+
+        if(!bookName){
+            errorMessage = errorMessage + "Book name is empty\n";
+        }
+        if(!authorName) {
+            errorMessage = errorMessage + "Authors's name is empty\n";
+        }
+        if(!bookPrice) {
+            errorMessage = errorMessage + "Book Price is empty";
+        }
+        
+        if(errorMessage != "")
+            return alert(errorMessage);
+
+        //return alert(bookPrice.value);
+        // if (!bookName || !authorName || !bookPrice){
+        //     return alert("Contents cannot be empty");
+        // }
 
        // console.log("Adding "+ bookName + "," + authorName + "," + bookPrice);
         Axios.post("http://localhost:3001/insert", {
@@ -36,6 +56,11 @@ function Operations() {
 
     //update data
     const updateBookPrice = (id) => {
+
+        if(!newPrice){
+            return alert("New Price cannot be Empty!")
+        }
+
         Axios.put("http://localhost:3001/update", {
             id: id,
             newPrice: newPrice
